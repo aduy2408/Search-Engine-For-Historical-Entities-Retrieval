@@ -1,0 +1,86 @@
+# Vietnamese Historical Entity Search Engine - Requirements
+# Core web framework and API
+Flask>=2.0.0
+Flask-CORS>=3.0.0
+
+# Data processing and manipulation
+pandas>=1.3.0
+numpy>=1.21.0
+
+# Vietnamese NLP and text processing
+underthesea>=1.3.0
+regex>=2021.0.0
+unidecode>=1.3.0
+
+# Machine learning and semantic search
+torch>=1.9.0
+transformers>=4.15.0
+faiss-cpu>=1.7.0
+
+# Optional: GPU acceleration for semantic search
+# faiss-gpu>=1.7.0
+
+# Text processing and utilities
+difflib2>=0.1.0
+
+# Standard library enhancements (usually included but listed for completeness)
+# These are typically part of Python standard library but may need explicit installation in some environments
+typing-extensions>=4.0.0
+
+# Development and testing (optional)
+pytest>=6.0.0
+pytest-cov>=2.0.0
+
+# Jupyter notebook support (for data exploration notebooks)
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Additional utilities for text processing
+unicodedata2>=14.0.0
+
+# Performance monitoring (optional)
+psutil>=5.8.0
+
+# Configuration and environment management
+python-dotenv>=0.19.0
+
+# Logging enhancements (optional)
+colorlog>=6.0.0
+
+# Note: Some packages like 'pickle', 'json', 'logging', 'threading', 'concurrent.futures', 
+# 'multiprocessing', 'os', 'sys', 'time', 'datetime', 'collections', 'functools', 're' 
+# are part of Python's standard library and don't need to be installed separately.
+
+# Installation instructions:
+# 1. Basic installation:
+#    pip install -r requirements.txt
+#
+# 2. For GPU acceleration (if NVIDIA GPU available):
+#    pip install faiss-gpu>=1.7.0
+#    (instead of faiss-cpu)
+#
+# 3. For development:
+#    pip install -r requirements.txt
+#    pip install pytest pytest-cov jupyter
+#
+# 4. Minimum Python version: 3.8+
+#
+# 5. Recommended system requirements:
+#    - RAM: 4GB+ (8GB+ for semantic search)
+#    - Storage: 2GB+ for models and indexes
+#    - CPU: Multi-core recommended for parallel processing
+
+# Platform-specific notes:
+# - Windows: May need Microsoft Visual C++ Build Tools for some packages
+# - macOS: May need Xcode command line tools
+# - Linux: Usually works out of the box with most distributions
+
+# Model downloads (automatic on first use):
+# - PhoBERT model: ~400MB (vinai/phobert-base)
+# - underthesea models: ~100MB (Vietnamese NER models)
+# These will be downloaded automatically when first used.
+
+# Optional optimizations:
+# - For faster CSV processing: pip install pyarrow>=5.0.0
+# - For better memory management: pip install memory-profiler>=0.60.0
+# - For advanced text processing: pip install spacy>=3.4.0

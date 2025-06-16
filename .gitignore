@@ -1,0 +1,371 @@
+# Vietnamese Historical Entity Search Engine - .gitignore
+
+# ============================================================================
+# SENSITIVE FILES - API Keys and Credentials
+# ============================================================================
+API_KEYS.py
+*.key
+*.pem
+*.p12
+.env
+.env.local
+.env.production
+config/secrets.py
+secrets/
+credentials/
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# ============================================================================
+# MACHINE LEARNING & AI MODELS
+# ============================================================================
+# Model files and caches
+models/
+*.model
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.pb
+*.pth
+*.pt
+*.bin
+*.safetensors
+
+# Hugging Face transformers cache
+.cache/
+transformers_cache/
+torch_cache/
+
+# TensorFlow
+*.tfrecord
+*.tfevents.*
+checkpoint
+model.ckpt.*
+
+# PyTorch
+lightning_logs/
+
+# ============================================================================
+# SEARCH ENGINE SPECIFIC
+# ============================================================================
+# Generated indexes and data
+search_indexes/
+semantic_indexes/
+indexes/
+*.index
+*.faiss
+
+# Processed data files
+processed_data/
+processed_*.csv
+*_processed.csv
+*_enhanced.csv
+*_combined.csv
+
+# Temporary processing files
+temp_*.csv
+tmp_*.json
+*.tmp
+
+# Large data files
+*.csv.gz
+*.json.gz
+data/large/
+Monument_database/large_files/
+
+# Cache files
+cache/
+*.cache
+.cache/
+
+# ============================================================================
+# DEVELOPMENT & EDITORS
+# ============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================================================
+# OPERATING SYSTEM
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# LOGS AND TEMPORARY FILES
+# ============================================================================
+# Log files
+*.log
+logs/
+log/
+*.log.*
+*.out
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# ============================================================================
+# DOCUMENTATION AND MEDIA
+# ============================================================================
+# Large media files (optional - uncomment if needed)
+# *.mp4
+# *.avi
+# *.mov
+# *.wmv
+# *.mp3
+# *.wav
+# *.flac
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.bmp
+# *.tiff
+# *.pdf
+
+# ============================================================================
+# PROJECT SPECIFIC EXCLUSIONS
+# ============================================================================
+# Crawler outputs
+crawler_output/
+scraped_data/
+raw_data/
+
+# Test outputs
+test_output/
+test_results/
+
+# Performance benchmarks
+benchmarks/
+performance_logs/
+
+# User-specific configuration
+user_config.py
+local_config.py
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Compressed archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================================================
+# KEEP THESE FILES (explicitly track important files)
+# ============================================================================
+# Force include important configuration templates
+!config_template.py
+!.env.example
+!requirements.txt
+!README.md
+
+# Force include sample data (small files only)
+!sample_data.csv
+!example_*.json
+
+# ============================================================================
+# END OF .gitignore
+# ============================================================================
