@@ -1,161 +1,84 @@
 # Vietnamese Historical Entity Search Engine
 
-A comprehensive search engine for Vietnamese historical texts that combines entity-based search, text search, and semantic search capabilities. The system is designed to help researchers and users explore Vietnamese historical documents through multiple search modalities.
+> A high-performance search engine for Vietnamese historical texts combining Entity (NER), Text (TF-IDF), and Semantic (PhoBERT) retrieval.
 
-## Features
+---
 
-### Core Search Capabilities
-- **Entity Search**: Find documents by historical entities (people, places, organizations)
-- **Text Search**: Traditional keyword-based search with TF-IDF ranking
-- **Semantic Search**: PhoBERT-powered semantic similarity search for Vietnamese text(NOT DONE)
-- **Hybrid Search**: Combines all search types for comprehensive results
-- **Type-based Search**: Search by entity types (PER/LOC/ORG)
+| Service | Port | Vai trò |
+|---|---|---|
+| **Main API** | `5000` | Flask backend core handling Entity, Text, and Hybrid search |
+| **Web Interface** | `5000` | Built-in search UI (HTML/JS served via Main API) |
+| **Semantic API** | `5001` | Standalone PhoBERT-based semantic similarity API |
+| **Indexing** | `N/A` | Offline scripts for building FAISS and Entity indexes |
 
-### Vietnamese Language Support
-- **Named Entity Recognition**: Uses `underthesea` for Vietnamese NER
-- **Semantic Understanding**: PhoBERT model specifically trained on Vietnamese text
-- **Text Preprocessing**: Advanced Vietnamese text normalization and cleaning
-- **Stop Words**: Comprehensive Vietnamese stop words handling
+---
 
-### Performance Optimizations
-- **Parallel Processing**: Multi-threaded search and indexing
-- **Caching**: LRU caches for frequent queries and computations
-- **FAISS Integration**: Fast vector similarity search
-- **Memory Optimization**: Efficient data structures and memory usage
+## Structure
 
-## Architecture
-
-The system consists of two main components:
-
-### 1. Main Search Engine (`search_engine/`)
-- **Entity-based search** with fuzzy matching
-- **Text search** with TF-IDF ranking
-- **Hybrid search** combining multiple approaches
-- **REST API** with web interface
-
-### 2. Semantic Search Module (`semantic_search/`)
-- * This is still being worked on
-- **Standalone semantic search** using PhoBERT
-- **Vector embeddings** with FAISS indexing
-- **Independent API** on separate port
-- **Direct CSV data loading**
-
-## 📋 Requirements
-
-
-### Python Dependencies
-See `requirements.txt` for complete list.
-
-## Installation
-
-### 1. Clone Repository
-```bash
-git clone <repository-url>
-cd Search_Engine
+```
+Search-Engine/
+├── search_engine/              ← Main search engine module
+│   ├── api.py                  ← Flask entry point (Main API + UI)
+│   ├── search_core.py          ← Core logic (TF-IDF, Hybrid ranking)
+│   ├── entity_indexer.py       ← Entity index builder (NER-based)
+│   ├── config.py               ← Search settings & port configuration
+│   └── demo.py                 ← Command-line interactive demo
+├── semantic_search/            ← Semantic search module
+│   ├── semantic_api.py         ← Standalone API (PhoBERT)
+│   ├── semantic_indexer.py     ← Vector search logic (FAISS)
+│   ├── build_semantic_indexes.py← Script to generate vector embeddings
+│   └── config.py               ← Semantic model & API settings
+└── Monument_database/          ← Data repository
+    ├── merged.csv              ← Combined historical dataset
+    ├── processed_vietnamese.py ← Text normalization utilities
+    └── vietnamese-stopwords.txt← Custom stopwords list
 ```
 
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+## Demo
+<figure>
+  <div align="center">
+    <img src="image.png" alt="Search Engine Demo" style="max-width: 100%;">
+  </div>
+</figure>
 
-### 3. Build Search Indexes
+## Important notes
 
-#### Main Search Engine
+### Model & Indexes
+- **PhoBERT**: Semantic search requires `vinai/phobert-base`. The first run will download ~400MB.
+- **Data**: Ensure `merged.csv` is correctly placed in `Monument_database/`.
+- **Ports**: If running both APIs, ensure they are on different ports (configured in `config.py`).
+
+## Instruction
+
 ```bash
+# Terminal 1 — Build Entity Index
 python search_engine/entity_indexer.py
-```
 
-#### Semantic Search (Optional, still working on it)
-```bash
-# Navigate to semantic search directory
-cd semantic_search
+# Terminal 2 — Build Semantic Index (Requires GPU/CPU)
+cd semantic_search && python build_semantic_indexes.py
 
-# Build semantic indexes (downloads PhoBERT model ~400MB)
-python build_semantic_indexes.py
-```
-
-## Usage
-
-### 1. Start Main Search Engine
-```bash
-# Start the main search API
+# Terminal 3 — Main Search API (Entity + Hybrid)
 python search_engine/api.py
+
+# Terminal 4 — Semantic Search API
+cd semantic_search && python semantic_api.py
 ```
 
-### 2. Start Semantic Search (Optional, still working on it)
-```bash
-# Start semantic search API
-cd semantic_search
-python semantic_api.py
-```
+---
 
-### 3. Web Interface
-Open `http://localhost:5000` in your browser for the interactive search interface.
+## API Endpoints 
 
-### 4. API Endpoints
+| Method | Endpoint | Mô tả |
+|---|---|---|
+| `GET` | `/` | Home - Search Web Interface |
+| `GET` | `/api/search` | Main search: `q=query`, `type=hybrid/entity/text` |
+| `GET` | `/api/suggest` | Autocomplete suggestions for entities |
+| `GET` | `/api/stats` | Database statistics (counts, types) |
+| `GET` | `/api/semantic/search` | Semantic search endpoint (PhoBERT) |
+| `GET` | `/api/health` | Service health check |
+| `GET` | `/api/cache/clear` | Clear LRU caches for development |
+| `GET` | `/api/entity/{name}` | Detailed information for a specific entity |
 
-#### Main Search Engine
-```bash
-# Entity search
-GET /api/search?q=Tây Ninh&type=entity&limit=10
-
-# Text search
-GET /api/search?q=lễ hội&type=text&limit=10
-
-# Hybrid search
-GET /api/search?q=văn hóa truyền thống&type=hybrid&limit=10
-
-# Get suggestions
-GET /api/suggest?q=Tây&limit=5
-
-```
-
-
-## Data Format
-
-The system expects CSV data with the following columns:
-- `title`: Document title
-- `content`: Document content
-- `url`: Source URL (optional)
-
-
-## 🔧 Configuration
-
-### Main Search Engine
-Edit `search_engine/config.py`:
-```python
-# Data paths
-DATA_PATH = "Monument_database/processed_vietnamese_texts_combined.csv"
-INDEX_DIR = "search_indexes"
-
-# Search settings
-DEFAULT_SEARCH_LIMIT = 10
-FUZZY_MATCH_THRESHOLD = 0.6
-
-# Performance settings
-ENABLE_PARALLEL_PROCESSING = True
-MAX_WORKER_THREADS = 4
-```
-
-### Semantic Search
-Edit `semantic_search/config.py`:
-```python
-# Model settings
-SEMANTIC_MODEL_NAME = "vinai/phobert-base"
-EMBEDDING_DIMENSION = 768
-SEMANTIC_BATCH_SIZE = 16
-
-# Performance settings
-ENABLE_GPU_ACCELERATION = False
-```
-
-## 🧪 Testing
-
-### Run Demo
-```bash
-python search_engine/demo.py
-```
 
 
 
